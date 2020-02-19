@@ -113,10 +113,10 @@ print('''
 6-й день: 3,22
 Ответ: на 6-й день спортсмен достиг результата — не менее 3 км.
 ''')
-#start_dist = 2
-#aim_dist = 3
-start_dist = int(input("Введите начальное расстояние пробежки: "))
-aim_dist = int(input("Введите цель, требуемое расстояние пробежки: "))
+start_dist = 2
+aim_dist = 3
+#start_dist = int(input("Введите начальное расстояние пробежки: "))
+#aim_dist = int(input("Введите цель, требуемое расстояние пробежки: "))
 
 prev_val = start_dist
 def calk_next(numb):
