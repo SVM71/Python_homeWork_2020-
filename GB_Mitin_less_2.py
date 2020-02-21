@@ -46,6 +46,7 @@ print('Выполнен обмен значений соседних элеме�
 относится месяц (зима, весна, лето, осень). Напишите решения через list и через dict.
 '''
 month_season_data = [
+    { 'month':'december',   'season':'winter' },
     { 'month':'january',    'season':'winter' },
     { 'month':'february',   'season':'winter' },
     { 'month':'march',      'season':'spring' },
@@ -55,9 +56,8 @@ month_season_data = [
     { 'month':'july',       'season':'summer' },
     { 'month':'august',     'season':'summer' },
     { 'month':'september',  'season':'autumn' },
-    { 'month':'october',    'season': 'autumn'},
-    { 'month':'november',   'season': 'autumn'},
-    { 'month':'december',   'season': 'winter'},
+    { 'month':'october',    'season':'autumn' },
+    { 'month':'november',   'season':'autumn' },
 ]
 
 while True:
@@ -67,9 +67,22 @@ while True:
         print('ERROR: wrong number!')
     else:
         break
+indx = user_inp%12
 
-print(  f'You input number: {user_inp}, month: { month_season_data[user_inp-1].get("month") }',
-        f'season: { month_season_data[user_inp-1].get("season") }')
+print(  f'You input number: {user_inp}, month: { month_season_data[indx].get("month") }',
+        f'season: { month_season_data[indx].get("season") }')
+
+###############################################################
+month_data = [ 'december', 'january', 'february',
+               'march', 'april', 'may',
+               'june', 'july', 'august',
+               'september', 'october', 'november' ]
+season_data = ['winter', 'spring', 'summer', 'autumn' ]
+
+print(  f'You input number: {user_inp}, month: { month_data[indx] }',
+        f'season: { season_data[indx&3] }')
+
+
 
 '''
 4) Пользователь вводит строку из нескольких слов, разделённых пробелами. Вывести каждое
@@ -105,6 +118,26 @@ def append_num_2_list( list, num):
     list.sort(reverse = True)
     return list
 
+''' 
+посмотрел семинар... есть требование против reverse... 
+'''
+def append_num_2_list_v2( list, num):
+    # предполагаем, список отсортирован по убыванию !!!
+    # если не так то код не работает!!!
+    indx = None
+    for el in list:
+        if num > el:
+            indx = list.index(el)
+            break
+
+    if indx is None:
+        list.insert(len(list), num)
+    else:
+        list.insert(indx, num)
+    return list
+
+
+
 my_list = [7, 5, 3, 3, 2]
 #Пользователь ввел число 3. Результат: 7, 5, 3, 3, ​3 ​, 2.
 append_num_2_list( my_list, 3)
@@ -115,6 +148,20 @@ print(my_list)
 #Пользователь ввел число 1. Результат: 7, 5, 3, 3, 2, ​1 ​.
 append_num_2_list( my_list, 1)
 print(my_list)
+
+my_list = [7, 5, 3, 3, 2]
+#Пользователь ввел число 3. Результат: 7, 5, 3, 3, ​3 ​, 2.
+append_num_2_list_v2( my_list, 3)
+print(my_list)
+#Пользователь ввел число 8. Результат: ​8 ​, 7, 5, 3, 3, 2.
+append_num_2_list_v2( my_list, 8)
+print(my_list)
+#Пользователь ввел число 1. Результат: 7, 5, 3, 3, 2, ​1 ​.
+append_num_2_list_v2( my_list, 1)
+print(my_list)
+
+
+
 
 '''
 6) *Реализовать структуру данных ​« ​Товары ​» ​. Она должна представлять собой список кортежей.
