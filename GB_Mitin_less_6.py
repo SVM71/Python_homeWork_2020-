@@ -177,6 +177,80 @@ TownCar и WorkCar переопределите метод show_speed. При з
 Создайте экземпляры классов, передайте значения атрибутов. Выполните доступ к
 атрибутам, выведите результат. Выполните вызов методов и также покажите результат.
 '''
+class c_Base_Car:
+    speed = None
+    color = None
+    name = None
+    is_police = None
+    direction_val = ('прямо', 'налево', 'направо', 'в обратном направлении')
+
+    def __init__(self, name, color, is_police=False):
+        self.color = color
+        self.name = name
+        self.is_police = is_police
+        self.direction = 'прямо'
+        self.speed = 0
+
+    def go(self, speed, direction):
+        action = f'машина {self.name} поехала'
+        self.speed = speed
+        self.direction = direction
+        return action
+
+    def stop(self):
+        action = f'машина {self.name} остановилась'
+        self.speed = 0
+        return action
+
+    def turn(self, direction):
+        action = f'машина {self.name} повернула {direction}'
+        return action
+
+    def show_speed(self):
+        return f'Скорость {self.name}: {self.speed} км/час'
+
+class c_SportCar(c_Base_Car):
+    def __init__(self, name, color):
+        super().__init__(name, color)
+
+class c_PoliceCar(c_Base_Car):
+    def __init__(self, name, color):
+        super().__init__(name, color, True)
+
+class c_TownCar(c_Base_Car):
+    speed_up_limit = None
+
+    def __init__(self, name, color):
+        super().__init__(name, color)
+        self.speed_up_limit = 40
+
+    def show_speed(self):
+        msg = ''
+        if self.speed > self.speed_up_limit:
+            msg = f' Зафиксировано превышение скорости {self.name} на {round(self.speed-self.speed_up_limit,1)} км/час'
+        return f' Машина {self.name} цвет: { self.color} скорость: {self.speed} км/час.{msg}'
+
+class c_WorkCar(c_TownCar):
+    def __init__(self, name, color):
+        super().__init__(name, color)
+        self.speed_up_limit = 60
+
+import random
+list_of_cars = [ c_SportCar( 'Super_SportCar', 'черный'),
+                 c_WorkCar( 'WorkCar_Truck', 'брызги шампанского'),
+                 c_TownCar( 'TownCar_Truck', 'синий'),
+                 c_PoliceCar( 'Super_PoliceCar', 'черный')
+]
+for car in list_of_cars:
+    print( car.go(random.randint(50, 201), 'прямо'))
+    print( car.show_speed())
+    print( car.go(random.randint(20, 80), 'налево'))
+    print( car.show_speed())
+    print( car.go(random.randint(20, 80), 'направо'))
+    print( car.show_speed())
+    print( car.go(random.randint(50, 201), 'прямо'))
+    print( car.show_speed())
+    print( car.stop())
 
 '''
 5) Реализовать класс Stationery (канцелярская принадлежность). Определить в нем атрибут title
@@ -186,3 +260,42 @@ TownCar и WorkCar переопределите метод show_speed. При з
 уникальное сообщение. Создать экземпляры классов и проверить, что выведет описанный
 метод для каждого экземпляра.
 '''
+class c_Stationery:
+    title = None
+    def __init__(self, title):
+        self.title = title
+    def draw(self):
+        print(f'{self.title} запуск отрисовки.')
+
+class c_Pen(c_Stationery):
+    def __init__(self, title):
+        super().__init__(title)
+
+    def draw(self):
+        print('class c_Pen (ручка).')
+
+class c_Pencil(c_Stationery):
+    def __init__(self, title):
+        super().__init__(title)
+
+    def draw(self):
+        print('class c_Pencil (карандаш)')
+        super().draw()
+
+class c_Handle(c_Stationery):
+    def __init__(self, title):
+        super().__init__(title)
+
+    def draw(self):
+        print('class c_Handle (маркер).')
+        super().draw()
+
+
+list_of_Stationery = [ c_Pen('Синяя ручка'),
+                       c_Pencil('Черный карандаш'),
+                       c_Handle('Зеленый маркер'),
+                       c_Handle('Красный маркер')]
+
+for Stationery in list_of_Stationery:
+    Stationery.draw()
+
